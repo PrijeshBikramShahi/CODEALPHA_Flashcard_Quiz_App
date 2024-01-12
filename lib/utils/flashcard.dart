@@ -2,7 +2,12 @@ import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 
 class FlashCard extends StatelessWidget {
-  const FlashCard({super.key, required this.question, required this.answer, required this.frontColor, required this.backColor});
+  const FlashCard(
+      {super.key,
+      required this.question,
+      required this.answer,
+      required this.frontColor,
+      required this.backColor});
   final String question;
   final String answer;
   final Color frontColor;
@@ -12,14 +17,27 @@ class FlashCard extends StatelessWidget {
     return Center(
       child: FlipCard(
         front: Container(
+          alignment: Alignment.center,
           decoration: BoxDecoration(
             border: Border.all(width: 2),
             color: frontColor,
           ),
           height: 550,
           width: 350,
-          child:  Center(
-            child: Text(question),
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Text(
+                question,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  letterSpacing: -1,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
+                  overflow: TextOverflow.clip,
+                ),
+              ),
+            ),
           ),
         ),
         back: Container(
@@ -29,8 +47,17 @@ class FlashCard extends StatelessWidget {
           ),
           height: 550,
           width: 350,
-          child:  Center(
-            child: Text(answer),
+          child: Center(
+            child: Text(
+              answer,
+              textAlign: TextAlign.center,
+                style: TextStyle(
+                  letterSpacing: -1,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
+                  overflow: TextOverflow.clip,
+                ),
+            ),
           ),
         ),
       ),
