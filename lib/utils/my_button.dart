@@ -4,16 +4,16 @@ class MyButton extends StatelessWidget {
    MyButton({
     super.key,
     required this.text,
-    this.onTap
+    required this.onTap
   });
 
   final Text text;
-  VoidCallback? onTap;
+  VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),

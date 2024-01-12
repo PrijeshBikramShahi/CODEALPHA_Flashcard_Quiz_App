@@ -12,24 +12,39 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List QnA = [
+  List qNa = [
     ['Question1', 'Answer1'],
-    ['Question2', 'Answer2'],
-    ['Question3', 'Answer3'],
-    ['Question4', 'Answer4'],
-    ['Question5', 'Answer5'],
   ];
-
+  final _questionController = TextEditingController();
+  final _answerController = TextEditingController();
   final _controller = SwipableStackController();
   String theQuestion = "Question";
   String theAnswer = "Answer";
   Color theColor = Colors.red;
 
-  void _addAQuestion() {
+  void saveNewQuestion() {
+    setState(() {
+      qNa.add([_questionController.text, _answerController.text]);
+      _questionController.clear();
+      _answerController.clear();
+    });
+    Navigator.of(context).pop();
+  }
+
+  void addAQuestion() {
     showDialog(
       context: context,
       builder: (context) {
-        return DialogBox();
+        return DialogBox(
+          questionController: _questionController,
+          answerController: _answerController,
+          onCancel: () {
+            _questionController.clear();
+            _answerController.clear();
+            Navigator.of(context).pop();
+          },
+          onSave: saveNewQuestion,
+        );
       },
     );
   }
@@ -39,17 +54,17 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: SwipableStack(
         controller: _controller,
-        itemCount: QnA.length,
+        itemCount: qNa.length,
         builder: (context, itemSwipeProperties) {
           return FlashCard(
-            question: QnA[_controller.currentIndex][0],
-            answer: QnA[_controller.currentIndex][1],
+            question: qNa[_controller.currentIndex][0],
+            answer: qNa[_controller.currentIndex][1],
             color: theColor,
           );
         },
       ),
       floatingActionButton: FloatingButton(addButton: () {
-        _addAQuestion();
+        addAQuestion();
       }),
     );
   }

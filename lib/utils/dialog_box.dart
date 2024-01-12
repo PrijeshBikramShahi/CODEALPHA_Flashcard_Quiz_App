@@ -2,10 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:rapid_recall/utils/my_button.dart';
 
 class DialogBox extends StatelessWidget {
-  const DialogBox({super.key});
+  DialogBox({
+    super.key,
+    required this.questionController,
+    required this.answerController,
+    required this.onCancel,
+    required this.onSave,
+  });
 
-  void onSave(){}
-  void onCancel(){}
+  final TextEditingController questionController;
+  final TextEditingController answerController;
+
+  VoidCallback onSave;
+  VoidCallback onCancel;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +23,8 @@ class DialogBox extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const TextField(
+            TextField(
+              controller: questionController,
               decoration: InputDecoration(
                 enabledBorder: OutlineInputBorder(),
                 label: Text("Enter a question"),
@@ -24,7 +34,8 @@ class DialogBox extends StatelessWidget {
             const SizedBox(
               height: 15,
             ),
-            const TextField(
+            TextField(
+              controller: answerController,
               decoration: InputDecoration(
                 enabledBorder: OutlineInputBorder(),
                 label: Text("Enter the answer"),
