@@ -13,8 +13,15 @@ class MyButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        width: 90,
+        
+        height: 50,
+        width: 100,
         decoration: BoxDecoration(
+          boxShadow: [BoxShadow(
+            color: AppColors.shadowColor1,
+            offset: Offset(1, 2)
+          )],
+          border: Border.all(width: 2),
           borderRadius: BorderRadius.circular(10),
           color: AppColors.foregroundColor,
         ),

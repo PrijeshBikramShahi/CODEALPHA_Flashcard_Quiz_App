@@ -15,10 +15,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   final _myBox = Hive.box('myBox');
   RapidRecallDatabase db = RapidRecallDatabase();
-
 
   final _questionController = TextEditingController();
   final _answerController = TextEditingController();
@@ -71,7 +69,33 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        flexibleSpace: Container(
+          alignment: Alignment.bottomRight,
+          decoration: const BoxDecoration(),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 50.0),
+            child: Container(
+              decoration: BoxDecoration(
+                boxShadow: [BoxShadow(
+                  color: AppColors.shadowColor1
+                )],
+                border: Border.all(width: 2),
+                borderRadius: BorderRadius.circular(5),
+                color: AppColors.foregroundColor,
+              ),
+              child: const Padding(
+                padding: EdgeInsets.all(.0),
+                child: Icon(
+                  Icons.shuffle_rounded,
+                  size: 40,
+                ),
+              ),
+            ),
+          ),
+        ),
+        backgroundColor: AppColors.backgroundColor,
+      ),
       backgroundColor: AppColors.backgroundColor,
       body: SwipableStack(
         controller: _controller,

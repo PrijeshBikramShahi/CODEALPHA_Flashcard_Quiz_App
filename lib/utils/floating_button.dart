@@ -15,12 +15,12 @@ class FloatingButton extends StatelessWidget {
         height: 70,
         width: 70,
         decoration: BoxDecoration(
-            border: Border.all(width: 2),
+            border: Border.all(width: 3),
             color: AppColors.foregroundColor,
             borderRadius: BorderRadius.circular(10)),
         child: const Icon(
           Icons.add_rounded,
-          size: 40,
+          size: 50,
         ),
       ),
     );
