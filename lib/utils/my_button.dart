@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class MyButton extends StatelessWidget {
-   MyButton({
+  MyButton({
     super.key,
     required this.text,
     required this.onTap
@@ -19,7 +20,7 @@ class MyButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
           color: Colors.red,
         ),
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: text,
       ),
     );

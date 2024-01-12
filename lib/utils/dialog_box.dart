@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rapid_recall/utils/my_button.dart';
 
+// ignore: must_be_immutable
 class DialogBox extends StatelessWidget {
   DialogBox({
     super.key,
