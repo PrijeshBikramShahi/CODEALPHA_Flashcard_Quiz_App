@@ -48,6 +48,28 @@ class _HomePageState extends State<HomePage> {
     Navigator.of(context).pop();
   }
 
+  void editSave(int index) {
+    setState(() {
+      db.qNa[index][0] = _questionController.text;
+      db.qNa[index][1] = _answerController.text;
+    });
+    _questionController.clear();
+    _answerController.clear();
+    Navigator.of(context).pop();
+  }
+
+  void editButtonClicked(int index) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return DialogBox(
+              questionController: _questionController,
+              answerController: _answerController,
+              onCancel: () {},
+              onSave: (){});
+        });
+  }
+
   void addAQuestion() {
     showDialog(
       context: context,
@@ -72,23 +94,27 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         flexibleSpace: Container(
           alignment: Alignment.bottomRight,
-          decoration: const BoxDecoration(),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 50.0),
-            child: Container(
-              decoration: BoxDecoration(
-                boxShadow: [BoxShadow(
-                  color: AppColors.shadowColor1
-                )],
-                border: Border.all(width: 2),
-                borderRadius: BorderRadius.circular(5),
-                color: AppColors.foregroundColor,
-              ),
-              child: const Padding(
-                padding: EdgeInsets.all(.0),
-                child: Icon(
-                  Icons.shuffle_rounded,
-                  size: 40,
+            child: GestureDetector(
+
+              child: Container(
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.shadowColor1,
+                    )
+                  ],
+                  border: Border.all(width: 2),
+                  borderRadius: BorderRadius.circular(5),
+                  color: AppColors.foregroundColor,
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.all(.0),
+                  child: Icon(
+                    Icons.shuffle_rounded,
+                    size: 40,
+                  ),
                 ),
               ),
             ),
