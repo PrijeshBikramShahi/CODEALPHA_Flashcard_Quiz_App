@@ -71,6 +71,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       backgroundColor: AppColors.backgroundColor,
       body: SwipableStack(
         controller: _controller,

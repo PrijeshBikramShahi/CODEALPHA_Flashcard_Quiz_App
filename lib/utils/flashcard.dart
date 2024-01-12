@@ -14,59 +14,62 @@ class FlashCard extends StatelessWidget {
   final Color backColor;
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: FlipCard(
-        front: Container(
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            boxShadow: [BoxShadow(
-              color: Colors.black,
-              blurRadius: 1,
-              spreadRadius: 1,
-              offset: Offset(1, 1)
-
-            )],
-            border: Border.all(width: 2),
-            color: frontColor,
-          ),
-          height: 550,
-          width: 350,
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Text(
-                question,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  letterSpacing: -1,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30,
-                  overflow: TextOverflow.clip,
+    return Padding(
+      padding: const EdgeInsets.only(left: 30,top: 80),
+      child: Column(
+        children: [FlipCard(
+          front: Container(
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              boxShadow: [BoxShadow(
+                color: Colors.black,
+                blurRadius: 1,
+                spreadRadius: 1,
+                offset: Offset(1, 1)
+      
+              )],
+              border: Border.all(width: 2),
+              color: frontColor,
+            ),
+            height: 550,
+            width: 350,
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Text(
+                  question,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    letterSpacing: -1,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
+                    overflow: TextOverflow.clip,
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-        back: Container(
-          decoration: BoxDecoration(
-            border: Border.all(width: 2),
-            color: backColor,
-          ),
-          height: 550,
-          width: 350,
-          child: Center(
-            child: Text(
-              answer,
-              textAlign: TextAlign.center,
-                style: TextStyle(
-                  letterSpacing: -1,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30,
-                  overflow: TextOverflow.clip,
-                ),
+          back: Container(
+            decoration: BoxDecoration(
+              border: Border.all(width: 2),
+              color: backColor,
+            ),
+            height: 550,
+            width: 350,
+            child: Center(
+              child: Text(
+                answer,
+                textAlign: TextAlign.center,
+                  style: TextStyle(
+                    letterSpacing: -1,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
+                    overflow: TextOverflow.clip,
+                  ),
+              ),
             ),
           ),
-        ),
+        ),]
       ),
     );
   }
