@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:rapid_recall/homepage.dart';
-import 'package:rapid_recall/utils/flashcard.dart';
-import 'package:rapid_recall/utils/floating_button.dart';
 
-void main() {
+void main() async {
+  await Hive.initFlutter();
+  await Hive.openBox('myBox');
   runApp(const MyApp());
 }
 
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:HomePage(),
-    );  
+      home: HomePage(),
+    );
   }
 }
