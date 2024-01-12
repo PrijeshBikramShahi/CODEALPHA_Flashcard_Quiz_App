@@ -20,7 +20,8 @@ class _HomePageState extends State<HomePage> {
   final _controller = SwipableStackController();
   String theQuestion = "Question";
   String theAnswer = "Answer";
-  Color theColor = Colors.red;
+  Color theFrontColor = Colors.orangeAccent;
+  Color theBackColor = Colors.blueAccent;
 
   void saveNewQuestion() {
     setState(() {
@@ -59,7 +60,8 @@ class _HomePageState extends State<HomePage> {
           return FlashCard(
             question: qNa[_controller.currentIndex][0],
             answer: qNa[_controller.currentIndex][1],
-            color: theColor,
+            frontColor: theFrontColor,
+            backColor: theBackColor,
           );
         },
       ),
