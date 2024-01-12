@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:rapid_recall/hive_storage/database.dart';
+import 'package:rapid_recall/utils/color_pallete.dart';
 import 'package:rapid_recall/utils/dialog_box.dart';
 import 'package:rapid_recall/utils/flashcard.dart';
 import 'package:rapid_recall/utils/floating_button.dart';
@@ -24,7 +25,7 @@ class _HomePageState extends State<HomePage> {
   final _controller = SwipableStackController();
   String theQuestion = "Question";
   String theAnswer = "Answer";
-  Color theFrontColor = Colors.orangeAccent;
+  Color theFrontColor = AppColors.foregroundColor;
   Color theBackColor = Colors.blueAccent;
 
   @override
@@ -70,6 +71,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.backgroundColor,
       body: SwipableStack(
         controller: _controller,
         itemCount: db.qNa.length,

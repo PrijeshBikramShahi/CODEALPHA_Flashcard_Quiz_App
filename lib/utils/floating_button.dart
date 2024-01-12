@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:rapid_recall/utils/color_pallete.dart';
 
 // ignore: must_be_immutable
 class FloatingButton extends StatelessWidget {
-   FloatingButton({super.key, this.addButton});
+  FloatingButton({super.key, this.addButton});
 
   VoidCallback? addButton;
 
@@ -11,13 +12,16 @@ class FloatingButton extends StatelessWidget {
     return InkWell(
       onTap: addButton,
       child: Container(
-        height: 80,
-        width: 80,
+        height: 70,
+        width: 70,
         decoration: BoxDecoration(
-            border: Border.all(),
-            color: Colors.amber,
+            border: Border.all(width: 2),
+            color: AppColors.foregroundColor,
             borderRadius: BorderRadius.circular(10)),
-        child: const Icon(Icons.add_rounded),
+        child: const Icon(
+          Icons.add_rounded,
+          size: 40,
+        ),
       ),
     );
   }

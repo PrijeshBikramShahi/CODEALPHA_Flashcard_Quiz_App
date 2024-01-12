@@ -19,6 +19,13 @@ class FlashCard extends StatelessWidget {
         front: Container(
           alignment: Alignment.center,
           decoration: BoxDecoration(
+            boxShadow: [BoxShadow(
+              color: Colors.black,
+              blurRadius: 1,
+              spreadRadius: 1,
+              offset: Offset(1, 1)
+
+            )],
             border: Border.all(width: 2),
             color: frontColor,
           ),
