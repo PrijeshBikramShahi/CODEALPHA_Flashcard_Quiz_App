@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 
 class MyButton extends StatelessWidget {
-  const MyButton({
+   MyButton({
     super.key,
-    this.text,
+    required this.text,
+    this.onTap
   });
 
-  final text;
+  final Text text;
+  VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      onTap: () {},
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),

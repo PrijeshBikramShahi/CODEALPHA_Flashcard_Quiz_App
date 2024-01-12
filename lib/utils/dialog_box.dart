@@ -4,37 +4,46 @@ import 'package:rapid_recall/utils/my_button.dart';
 class DialogBox extends StatelessWidget {
   const DialogBox({super.key});
 
+  void onSave(){}
+  void onCancel(){}
+
   @override
   Widget build(BuildContext context) {
-    return const AlertDialog(
+    return AlertDialog(
       content: SizedBox(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            TextField(
+            const TextField(
               decoration: InputDecoration(
                 enabledBorder: OutlineInputBorder(),
                 label: Text("Enter a question"),
               ),
-              style: TextStyle(
-                
-              ),
+              style: TextStyle(),
             ),
-            SizedBox(height: 15,),
-            TextField(decoration: InputDecoration(
+            const SizedBox(
+              height: 15,
+            ),
+            const TextField(
+              decoration: InputDecoration(
                 enabledBorder: OutlineInputBorder(),
                 label: Text("Enter the answer"),
-              ),),
-            SizedBox(height: 15,),
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 MyButton(
-                  text: Text("Cancel"),
+                  onTap: onCancel,
+                  text: const Text("Cancel"),
                 ),
-            MyButton(
-              text: Text("Save"),
-            )
+                MyButton(
+                  onTap: onSave,
+                  text: const Text("Save"),
+                )
               ],
             ),
           ],
