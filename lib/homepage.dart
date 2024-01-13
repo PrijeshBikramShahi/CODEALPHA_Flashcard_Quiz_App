@@ -48,16 +48,6 @@ class _HomePageState extends State<HomePage> {
     Navigator.of(context).pop();
   }
 
-  void editSave(int index) {
-    setState(() {
-      db.qNa[index][0] = _questionController.text;
-      db.qNa[index][1] = _answerController.text;
-    });
-    _questionController.clear();
-    _answerController.clear();
-    Navigator.of(context).pop();
-  }
-
   void editButtonClicked(int index) {
     showDialog(
         context: context,
@@ -65,8 +55,20 @@ class _HomePageState extends State<HomePage> {
           return DialogBox(
               questionController: _questionController,
               answerController: _answerController,
-              onCancel: () {},
-              onSave: (){});
+              onCancel: () {
+                _questionController.clear();
+                _answerController.clear();
+                Navigator.of(context).pop();
+              },
+              onSave: () {
+                setState(() {
+                  db.qNa[index][0] = _questionController.text;
+                  db.qNa[index][1] = _answerController.text;
+                });
+                _questionController.clear();
+                _answerController.clear();
+                Navigator.of(context).pop();
+              });
         });
   }
 
@@ -96,27 +98,61 @@ class _HomePageState extends State<HomePage> {
           alignment: Alignment.bottomRight,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 50.0),
-            child: GestureDetector(
-
-              child: Container(
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.shadowColor1,
-                    )
-                  ],
-                  border: Border.all(width: 2),
-                  borderRadius: BorderRadius.circular(5),
-                  color: AppColors.foregroundColor,
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.all(.0),
-                  child: Icon(
-                    Icons.shuffle_rounded,
-                    size: 40,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    editButtonClicked(_controller.currentIndex);
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      boxShadow: const [
+                        BoxShadow(
+                          color: AppColors.shadowColor1,
+                        )
+                      ],
+                      border: Border.all(width: 2),
+                      borderRadius: BorderRadius.circular(5),
+                      color: AppColors.foregroundColor,
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Icon(
+                        Icons.edit,
+                        size: 30,
+                      ),
+                    ),
                   ),
                 ),
-              ),
+                SizedBox(width: 15,),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      db.qNa.shuffle();
+                    });
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      boxShadow: const [
+                        BoxShadow(
+                          color: AppColors.shadowColor1,
+                        )
+                      ],
+                      border: Border.all(width: 2),
+                      borderRadius: BorderRadius.circular(5),
+                      color: AppColors.foregroundColor,
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.all(3.0),
+                      child: Icon(
+                        Icons.shuffle_rounded,
+                        size: 40,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),

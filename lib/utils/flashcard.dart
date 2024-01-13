@@ -15,19 +15,19 @@ class FlashCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 30,top: 80),
-      child: Column(
-        children: [FlipCard(
+      padding: const EdgeInsets.only(left: 30, top: 80),
+      child: Column(children: [
+        FlipCard(
           front: Container(
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              boxShadow: [BoxShadow(
-                color: Colors.black,
-                blurRadius: 1,
-                spreadRadius: 1,
-                offset: Offset(1, 1)
-      
-              )],
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black,
+                    blurRadius: 1,
+                    spreadRadius: 1,
+                    offset: Offset(1, 1))
+              ],
               border: Border.all(width: 2),
               color: frontColor,
             ),
@@ -60,17 +60,17 @@ class FlashCard extends StatelessWidget {
               child: Text(
                 answer,
                 textAlign: TextAlign.center,
-                  style: TextStyle(
-                    letterSpacing: -1,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30,
-                    overflow: TextOverflow.clip,
-                  ),
+                style: TextStyle(
+                  letterSpacing: -1,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
+                  overflow: TextOverflow.clip,
+                ),
               ),
             ),
           ),
-        ),]
-      ),
+        ),
+      ]),
     );
   }
 }
