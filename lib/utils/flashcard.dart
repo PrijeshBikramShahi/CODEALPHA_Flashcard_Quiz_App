@@ -7,7 +7,9 @@ class FlashCard extends StatelessWidget {
       required this.question,
       required this.answer,
       required this.frontColor,
-      required this.backColor});
+      required this.backColor,
+      required this.questionNo});
+  final String questionNo;
   final String question;
   final String answer;
   final Color frontColor;
@@ -22,7 +24,7 @@ class FlashCard extends StatelessWidget {
             alignment: Alignment.center,
             decoration: BoxDecoration(
               boxShadow: [
-                BoxShadow(
+                const BoxShadow(
                     color: Colors.black,
                     blurRadius: 1,
                     spreadRadius: 1,
@@ -37,9 +39,9 @@ class FlashCard extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Text(
-                  question,
+                  "${questionNo}. " + question,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     letterSpacing: -1,
                     fontWeight: FontWeight.bold,
                     fontSize: 30,
@@ -57,15 +59,31 @@ class FlashCard extends StatelessWidget {
             height: 550,
             width: 350,
             child: Center(
-              child: Text(
-                answer,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  letterSpacing: -1,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30,
-                  overflow: TextOverflow.clip,
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    answer,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      letterSpacing: -1,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30,
+                      overflow: TextOverflow.clip,
+                    ),
+                  ),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Icon(
+                        Icons.cancel_rounded,
+                      ),
+                      Icon(
+                        Icons.arrow_forward_rounded,
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ),

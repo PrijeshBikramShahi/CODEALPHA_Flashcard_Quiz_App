@@ -114,7 +114,7 @@ class _HomePageState extends State<HomePage> {
                       ],
                       border: Border.all(width: 2),
                       borderRadius: BorderRadius.circular(5),
-                      color: AppColors.foregroundColor,
+                      color: AppColors.editButtonColor,
                     ),
                     child: const Padding(
                       padding: EdgeInsets.all(8.0),
@@ -125,7 +125,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-                SizedBox(width: 15,),
+                SizedBox(width: 15),
                 GestureDetector(
                   onTap: () {
                     setState(() {
@@ -141,7 +141,7 @@ class _HomePageState extends State<HomePage> {
                       ],
                       border: Border.all(width: 2),
                       borderRadius: BorderRadius.circular(5),
-                      color: AppColors.foregroundColor,
+                      color: AppColors.shuffleButtonColor,
                     ),
                     child: const Padding(
                       padding: EdgeInsets.all(3.0),
@@ -164,6 +164,7 @@ class _HomePageState extends State<HomePage> {
         itemCount: db.qNa.length,
         builder: (context, itemSwipeProperties) {
           return FlashCard(
+            questionNo: (_controller.currentIndex + 1).toString(),
             question: db.qNa[_controller.currentIndex][0],
             answer: db.qNa[_controller.currentIndex][1],
             frontColor: theFrontColor,
