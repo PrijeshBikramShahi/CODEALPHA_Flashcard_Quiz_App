@@ -106,6 +106,14 @@ class _HomePageState extends State<HomePage> {
                 Navigator.of(context).pop();
               });
         });
+    db.updateDataBase();
+  }
+
+  void deleteButtonClicked() {
+    setState(() {
+      db.qNa.removeAt(_controller.currentIndex);
+    });
+    db.updateDataBase();
   }
 
   void addAQuestion() {
@@ -124,6 +132,7 @@ class _HomePageState extends State<HomePage> {
         );
       },
     );
+    db.updateDataBase();
   }
 
   @override
@@ -137,21 +146,19 @@ class _HomePageState extends State<HomePage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  child: Text(
-                    "Score: ${score}",
-                    style: const TextStyle(
-                      shadows: [
-                        BoxShadow(
-                          color: AppColors.shadowColor1,
-                          offset: Offset(3, 4),
-                          spreadRadius: 5,
-                        )
-                      ],
-                      color: Colors.white,
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                    ),
+                Text(
+                  "Score: $score",
+                  style: const TextStyle(
+                    shadows: [
+                      BoxShadow(
+                        color: AppColors.shadowColor1,
+                        offset: Offset(3, 4),
+                        spreadRadius: 5,
+                      )
+                    ],
+                    color: Colors.white,
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 Row(
@@ -245,6 +252,7 @@ class _HomePageState extends State<HomePage> {
               itemCount: db.qNa.length,
               builder: (context, itemSwipeProperties) {
                 return FlashCard(
+                  onDeleteClick: deleteButtonClicked,
                   onCorrectClick: correctAnswer,
                   onWrongClick: wrongAnswer,
                   questionNo: (_controller.currentIndex + 1).toString(),

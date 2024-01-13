@@ -13,6 +13,7 @@ class FlashCard extends StatelessWidget {
     required this.questionNo,
     required this.onCorrectClick,
     required this.onWrongClick,
+    required this.onDeleteClick,
   });
   final String questionNo;
   final String question;
@@ -22,7 +23,7 @@ class FlashCard extends StatelessWidget {
 
   VoidCallback onWrongClick;
   VoidCallback onCorrectClick;
-
+  VoidCallback onDeleteClick;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -50,15 +51,42 @@ class FlashCard extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "#$questionNo",
-                        style: const TextStyle(
-                            fontSize: 36,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: -0.5),
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "#$questionNo",
+                            style: const TextStyle(
+                                fontSize: 36,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: -0.5),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: onDeleteClick,
+                          child: Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(width: 2),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: AppColors.shadowColor2,
+                                      offset: Offset(1, 2),
+                                      spreadRadius: 1)
+                                ],
+                                borderRadius: BorderRadius.circular(10),
+                                color: AppColors.wrongButtonColor),
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Icon(
+                                Icons.delete,
+                                size: 36,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                     Text(
                       question,
@@ -97,10 +125,9 @@ class FlashCard extends StatelessWidget {
                       child: const Text(
                         "Answer:",
                         style: TextStyle(
-                          fontSize: 26,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: -0.7
-                        ),
+                            fontSize: 26,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: -0.7),
                       ),
                     ),
                   ),
