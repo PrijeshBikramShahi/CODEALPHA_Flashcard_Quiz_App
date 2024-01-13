@@ -8,14 +8,25 @@ class RapidRecallDatabase {
   void createInitialData() {
     qNa = [
       [
-        'Why is it called what it is called when its called whatever it is called so that it describes how its called?',
-        'Answer 1'
+        'What does CSS stand for?',
+        'Cascading Style Sheet'
       ],
-      ['Question 2', 'Answer 2'],
-      ['Question 2', 'Answer 2'],
-      ['Question 2', 'Answer 2'],
-      ['Question 2', 'Answer 2'],
-      ['Question 2', 'Answer 2'],
+      [
+        'What does HTML stand for?',
+        'HyperText Markup Language'
+      ],
+      [
+        'What is the default port for HTTP?',
+        '80'
+      ],
+      [
+        'What does SQL stand for?',
+        'Structured Query Language'
+      ],
+      [
+        'In JavaScript, what keyword is used to declare a variable?',
+        'var or let/const'
+      ],
     ];
   }
 

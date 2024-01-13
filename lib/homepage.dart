@@ -5,6 +5,7 @@ import 'package:rapid_recall/utils/color_pallete.dart';
 import 'package:rapid_recall/utils/dialog_box.dart';
 import 'package:rapid_recall/utils/flashcard.dart';
 import 'package:rapid_recall/utils/floating_button.dart';
+import 'package:rapid_recall/utils/my_button.dart';
 import 'package:swipable_stack/swipable_stack.dart';
 
 class HomePage extends StatefulWidget {
@@ -54,7 +55,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       score++;
       _controller.next(
-        duration: Duration(milliseconds: 1500),
+        duration: const Duration(milliseconds: 1500),
         swipeDirection: SwipeDirection.right,
       );
     });
@@ -62,27 +63,24 @@ class _HomePageState extends State<HomePage> {
 
   void wrongAnswer() {
     _controller.next(
-      duration: Duration(milliseconds: 1500),
+      duration: const Duration(milliseconds: 1500),
       swipeDirection: SwipeDirection.left,
     );
   }
 
   void shuffleButtonClicked() {
-    setState(() {
-      if (_controller.currentIndex == db.qNa.length) {
-        setState(() {
-          debugPrint(db.qNa.length.toString());
-          db.createInitialData();
-          db.qNa.shuffle();
-          setState(() {});
-        });
-      } else {
-        setState(() {
-          debugPrint("non");
-          db.qNa.shuffle();
-        });
-      }
-    });
+    if (_controller.currentIndex == db.qNa.length) {
+      setState(() {
+        debugPrint(db.qNa.length.toString());
+        db.qNa.shuffle();
+        score = 0;
+      });
+    } else {
+      setState(() {
+        debugPrint("non");
+        db.qNa.shuffle();
+      });
+    }
   }
 
   void editButtonClicked(int index) {
@@ -141,7 +139,7 @@ class _HomePageState extends State<HomePage> {
                 Container(
                   child: Text(
                     "Score: ${score}",
-                    style: TextStyle(
+                    style: const TextStyle(
                       shadows: [
                         BoxShadow(
                           color: AppColors.shadowColor1,
@@ -182,7 +180,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     InkWell(
                       onTap: () {
                         shuffleButtonClicked();
@@ -218,10 +216,6 @@ class _HomePageState extends State<HomePage> {
       ),
       backgroundColor: AppColors.backgroundColor,
       body: SwipableStack(
-        // onSwipeCompleted: (index, direction) {
-        //   db.qNa.removeAt(index);
-        //   debugPrint(db.qNa.length.toString());
-        // },
         controller: _controller,
         itemCount: db.qNa.length,
         builder: (context, itemSwipeProperties) {

@@ -2,6 +2,7 @@ import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:rapid_recall/utils/color_pallete.dart';
 
+// ignore: must_be_immutable
 class FlashCard extends StatelessWidget {
   FlashCard({
     super.key,
@@ -46,15 +47,31 @@ class FlashCard extends StatelessWidget {
             child: Center(
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
-                child: Text(
-                  "${questionNo}. " + question,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    letterSpacing: -1,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30,
-                    overflow: TextOverflow.clip,
-                  ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "#$questionNo",
+                        style: const TextStyle(
+                            fontSize: 36,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: -0.5),
+                      ),
+                    ),
+                    Text(
+                      question,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        letterSpacing: -1,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                        overflow: TextOverflow.clip,
+                      ),
+                    ),
+                    const SizedBox()
+                  ],
                 ),
               ),
             ),
@@ -70,7 +87,23 @@ class FlashCard extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 14.0,
+                      top: 20,
+                    ),
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      child: const Text(
+                        "Answer:",
+                        style: TextStyle(
+                          fontSize: 26,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: -0.7
+                        ),
+                      ),
+                    ),
+                  ),
                   Text(
                     answer,
                     textAlign: TextAlign.center,
@@ -112,7 +145,7 @@ class FlashCard extends StatelessWidget {
                           onTap: onCorrectClick,
                           child: Container(
                             decoration: BoxDecoration(
-                              boxShadow: [
+                              boxShadow: const [
                                 BoxShadow(
                                   spreadRadius: 2,
                                   offset: Offset(1, 2),
