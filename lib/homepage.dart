@@ -102,6 +102,7 @@ class _HomePageState extends State<HomePage> {
                 });
                 _questionController.clear();
                 _answerController.clear();
+                db.updateDataBase();
                 Navigator.of(context).pop();
               });
         });
