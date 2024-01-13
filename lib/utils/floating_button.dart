@@ -15,6 +15,13 @@ class FloatingButton extends StatelessWidget {
         height: 70,
         width: 70,
         decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.shadowColor1,
+                offset: Offset(1, 2),
+                spreadRadius: 2
+              )
+            ],
             border: Border.all(width: 3),
             color: AppColors.foregroundColor,
             borderRadius: BorderRadius.circular(10)),

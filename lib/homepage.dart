@@ -21,6 +21,7 @@ class _HomePageState extends State<HomePage> {
   final _questionController = TextEditingController();
   final _answerController = TextEditingController();
   final _controller = SwipableStackController();
+  int score = 0;
   String theQuestion = "Question";
   String theAnswer = "Answer";
   Color theFrontColor = AppColors.foregroundColor;
@@ -30,7 +31,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     // ignore: todo
     // TODO: implement initState
-    if (_myBox.get("TODOLIST") == null) {
+    if (_myBox.get("QNA") == null) {
       db.createInitialData();
     } else {
       db.loadData();
@@ -46,6 +47,38 @@ class _HomePageState extends State<HomePage> {
       _answerController.clear();
     });
     Navigator.of(context).pop();
+    db.updateDataBase();
+  }
+
+  void correctAnswer() {
+    setState(() {
+      score++;
+      _controller.next(
+        duration: Duration(milliseconds: 1500),
+        swipeDirection: SwipeDirection.right,
+      );
+    });
+  }
+
+  void wrongAnswer() {
+    _controller.next(
+      duration: Duration(milliseconds: 1500),
+      swipeDirection: SwipeDirection.left,
+    );
+  }
+
+  void shuffleButtonClicked() {
+    if (db.qNa.isEmpty) {
+      setState(() {
+        db.createInitialData();
+        db.loadData();
+        db.qNa.shuffle();
+      });
+    } else {
+      setState(() {
+        db.qNa.shuffle();
+      });
+    }
   }
 
   void editButtonClicked(int index) {
@@ -99,58 +132,79 @@ class _HomePageState extends State<HomePage> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 50.0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                GestureDetector(
-                  onTap: () {
-                    editButtonClicked(_controller.currentIndex);
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      boxShadow: const [
+                Container(
+                  child: Text(
+                    "Score: ${score}",
+                    style: TextStyle(
+                      shadows: [
                         BoxShadow(
                           color: AppColors.shadowColor1,
+                          offset: Offset(3, 4),
+                          spreadRadius: 5,
                         )
                       ],
-                      border: Border.all(width: 2),
-                      borderRadius: BorderRadius.circular(5),
-                      color: AppColors.editButtonColor,
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Icon(
-                        Icons.edit,
-                        size: 30,
-                      ),
+                      color: Colors.white,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-                SizedBox(width: 15),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      db.qNa.shuffle();
-                    });
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      boxShadow: const [
-                        BoxShadow(
-                          color: AppColors.shadowColor1,
-                        )
-                      ],
-                      border: Border.all(width: 2),
-                      borderRadius: BorderRadius.circular(5),
-                      color: AppColors.shuffleButtonColor,
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.all(3.0),
-                      child: Icon(
-                        Icons.shuffle_rounded,
-                        size: 40,
+                Row(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        editButtonClicked(_controller.currentIndex);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          boxShadow: const [
+                            BoxShadow(
+                                color: AppColors.shadowColor1,
+                                spreadRadius: 2,
+                                offset: Offset(1, 2))
+                          ],
+                          border: Border.all(width: 2),
+                          borderRadius: BorderRadius.circular(5),
+                          color: AppColors.editButtonColor,
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Icon(
+                            Icons.edit,
+                            size: 30,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                    SizedBox(width: 15),
+                    InkWell(
+                      onTap: () {
+                        shuffleButtonClicked();
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          boxShadow: const [
+                            BoxShadow(
+                                color: AppColors.shadowColor1,
+                                spreadRadius: 2,
+                                offset: Offset(1, 2))
+                          ],
+                          border: Border.all(width: 2),
+                          borderRadius: BorderRadius.circular(5),
+                          color: AppColors.shuffleButtonColor,
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.all(3.0),
+                          child: Icon(
+                            Icons.shuffle_rounded,
+                            size: 40,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -160,10 +214,15 @@ class _HomePageState extends State<HomePage> {
       ),
       backgroundColor: AppColors.backgroundColor,
       body: SwipableStack(
+        onSwipeCompleted: (index, direction) {
+          db.qNa.remove(_controller.currentIndex);
+        },
         controller: _controller,
         itemCount: db.qNa.length,
         builder: (context, itemSwipeProperties) {
           return FlashCard(
+            onCorrectClick: correctAnswer,
+            onWrongClick: wrongAnswer,
             questionNo: (_controller.currentIndex + 1).toString(),
             question: db.qNa[_controller.currentIndex][0],
             answer: db.qNa[_controller.currentIndex][1],
