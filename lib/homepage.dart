@@ -3,6 +3,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:rapid_recall/hive_storage/database.dart';
 import 'package:rapid_recall/utils/color_pallete.dart';
 import 'package:rapid_recall/utils/dialog_box.dart';
+import 'package:rapid_recall/utils/end_screen.dart';
 import 'package:rapid_recall/utils/flashcard.dart';
 import 'package:rapid_recall/utils/floating_button.dart';
 import 'package:swipable_stack/swipable_stack.dart';
@@ -146,74 +147,12 @@ class _HomePageState extends State<HomePage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "Score: $score",
-                  style: const TextStyle(
-                    shadows: [
-                      BoxShadow(
-                        color: AppColors.shadowColor1,
-                        offset: Offset(3, 4),
-                        spreadRadius: 5,
-                      )
-                    ],
-                    color: Colors.white,
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                ScoreBoard(score: score),
                 Row(
                   children: [
-                    InkWell(
-                      onTap: () {
-                        editButtonClicked(_controller.currentIndex);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          boxShadow: const [
-                            BoxShadow(
-                                color: AppColors.shadowColor1,
-                                spreadRadius: 2,
-                                offset: Offset(1, 2))
-                          ],
-                          border: Border.all(width: 2),
-                          borderRadius: BorderRadius.circular(5),
-                          color: AppColors.editButtonColor,
-                        ),
-                        child: const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Icon(
-                            Icons.edit,
-                            size: 30,
-                          ),
-                        ),
-                      ),
-                    ),
+                    EditButton(),
                     const SizedBox(width: 15),
-                    InkWell(
-                      onTap: () {
-                        shuffleButtonClicked();
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          boxShadow: const [
-                            BoxShadow(
-                                color: AppColors.shadowColor1,
-                                spreadRadius: 2,
-                                offset: Offset(1, 2))
-                          ],
-                          border: Border.all(width: 2),
-                          borderRadius: BorderRadius.circular(5),
-                          color: AppColors.shuffleButtonColor,
-                        ),
-                        child: const Padding(
-                          padding: EdgeInsets.all(3.0),
-                          child: Icon(
-                            Icons.shuffle_rounded,
-                            size: 40,
-                          ),
-                        ),
-                      ),
-                    ),
+                    ShuffleButton(),
                   ],
                 ),
               ],
@@ -224,22 +163,7 @@ class _HomePageState extends State<HomePage> {
       ),
       backgroundColor: AppColors.backgroundColor,
       body: endOfStack
-          ? Center(
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 150.0),
-                child: Text(
-                  (score == db.qNa.length)
-                      ? "CONGRATS!!! \n You scored $score/${db.qNa.length.toString()}!!"
-                      : "Your Final Score is $score/${db.qNa.length.toString()} \n Try Harder!",
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 30,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            )
+          ? EndScreen(score: score, db: db)
           : SwipableStack(
               onSwipeCompleted: (index, direction) {
                 if (_controller.currentIndex == db.qNa.length - 1) {
@@ -266,6 +190,90 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingButton(addButton: () {
         addAQuestion();
       }),
+    );
+  }
+
+  InkWell EditButton() {
+    return InkWell(
+                    onTap: () {
+                      editButtonClicked(_controller.currentIndex);
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        boxShadow: const [
+                          BoxShadow(
+                              color: AppColors.shadowColor1,
+                              spreadRadius: 2,
+                              offset: Offset(1, 2))
+                        ],
+                        border: Border.all(width: 2),
+                        borderRadius: BorderRadius.circular(5),
+                        color: AppColors.editButtonColor,
+                      ),
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Icon(
+                          Icons.edit,
+                          size: 30,
+                        ),
+                      ),
+                    ),
+                  );
+  }
+
+  InkWell ShuffleButton() {
+    return InkWell(
+      onTap: () {
+        shuffleButtonClicked();
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          boxShadow: const [
+            BoxShadow(
+                color: AppColors.shadowColor1,
+                spreadRadius: 2,
+                offset: Offset(1, 2))
+          ],
+          border: Border.all(width: 2),
+          borderRadius: BorderRadius.circular(5),
+          color: AppColors.shuffleButtonColor,
+        ),
+        child: const Padding(
+          padding: EdgeInsets.all(3.0),
+          child: Icon(
+            Icons.shuffle_rounded,
+            size: 40,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ScoreBoard extends StatelessWidget {
+  const ScoreBoard({
+    super.key,
+    required this.score,
+  });
+
+  final int score;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      "Score: $score",
+      style: const TextStyle(
+        shadows: [
+          BoxShadow(
+            color: AppColors.shadowColor1,
+            offset: Offset(3, 4),
+            spreadRadius: 5,
+          )
+        ],
+        color: Colors.white,
+        fontSize: 30,
+        fontWeight: FontWeight.bold,
+      ),
     );
   }
 }
