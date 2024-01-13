@@ -5,7 +5,6 @@ import 'package:rapid_recall/utils/color_pallete.dart';
 import 'package:rapid_recall/utils/dialog_box.dart';
 import 'package:rapid_recall/utils/flashcard.dart';
 import 'package:rapid_recall/utils/floating_button.dart';
-import 'package:rapid_recall/utils/my_button.dart';
 import 'package:swipable_stack/swipable_stack.dart';
 
 class HomePage extends StatefulWidget {
@@ -23,10 +22,9 @@ class _HomePageState extends State<HomePage> {
   final _answerController = TextEditingController();
   final _controller = SwipableStackController();
   int score = 0;
-  String theQuestion = "Question";
-  String theAnswer = "Answer";
   Color theFrontColor = AppColors.foregroundColor;
   Color theBackColor = Colors.blueAccent;
+  bool endOfStack = false;
 
   @override
   void initState() {
@@ -37,6 +35,7 @@ class _HomePageState extends State<HomePage> {
     } else {
       db.loadData();
     }
+    db.qNa.shuffle();
 
     super.initState();
   }
@@ -71,19 +70,20 @@ class _HomePageState extends State<HomePage> {
   void shuffleButtonClicked() {
     if (_controller.currentIndex == db.qNa.length) {
       setState(() {
-        debugPrint(db.qNa.length.toString());
         db.qNa.shuffle();
         score = 0;
       });
     } else {
       setState(() {
-        debugPrint("non");
+        // debugPrint("non");
         db.qNa.shuffle();
       });
     }
   }
 
   void editButtonClicked(int index) {
+    _questionController.text = db.qNa[_controller.currentIndex][0];
+    _answerController.text = db.qNa[_controller.currentIndex][1];
     showDialog(
         context: context,
         builder: (context) {
@@ -215,21 +215,45 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: AppColors.backgroundColor,
       ),
       backgroundColor: AppColors.backgroundColor,
-      body: SwipableStack(
-        controller: _controller,
-        itemCount: db.qNa.length,
-        builder: (context, itemSwipeProperties) {
-          return FlashCard(
-            onCorrectClick: correctAnswer,
-            onWrongClick: wrongAnswer,
-            questionNo: (_controller.currentIndex + 1).toString(),
-            question: db.qNa[_controller.currentIndex][0],
-            answer: db.qNa[_controller.currentIndex][1],
-            frontColor: theFrontColor,
-            backColor: theBackColor,
-          );
-        },
-      ),
+      body: endOfStack
+          ? Center(
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 150.0),
+                child: Text(
+                  (score == db.qNa.length)
+                      ? "CONGRATS!!! \n You scored $score/${db.qNa.length.toString()}!!"
+                      : "Your Final Score is $score/${db.qNa.length.toString()} \n Try Harder!",
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 30,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            )
+          : SwipableStack(
+              onSwipeCompleted: (index, direction) {
+                if (_controller.currentIndex == db.qNa.length - 1) {
+                  setState(() {
+                    endOfStack = !endOfStack;
+                  });
+                }
+              },
+              controller: _controller,
+              itemCount: db.qNa.length,
+              builder: (context, itemSwipeProperties) {
+                return FlashCard(
+                  onCorrectClick: correctAnswer,
+                  onWrongClick: wrongAnswer,
+                  questionNo: (_controller.currentIndex + 1).toString(),
+                  question: db.qNa[_controller.currentIndex][0],
+                  answer: db.qNa[_controller.currentIndex][1],
+                  frontColor: theFrontColor,
+                  backColor: theBackColor,
+                );
+              },
+            ),
       floatingActionButton: FloatingButton(addButton: () {
         addAQuestion();
       }),
