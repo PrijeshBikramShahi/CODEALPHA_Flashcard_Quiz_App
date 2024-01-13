@@ -68,17 +68,21 @@ class _HomePageState extends State<HomePage> {
   }
 
   void shuffleButtonClicked() {
-    if (db.qNa.isEmpty) {
-      setState(() {
-        db.createInitialData();
-        db.loadData();
-        db.qNa.shuffle();
-      });
-    } else {
-      setState(() {
-        db.qNa.shuffle();
-      });
-    }
+    setState(() {
+      if (_controller.currentIndex == db.qNa.length) {
+        setState(() {
+          debugPrint(db.qNa.length.toString());
+          db.createInitialData();
+          db.qNa.shuffle();
+          setState(() {});
+        });
+      } else {
+        setState(() {
+          debugPrint("non");
+          db.qNa.shuffle();
+        });
+      }
+    });
   }
 
   void editButtonClicked(int index) {
@@ -214,9 +218,10 @@ class _HomePageState extends State<HomePage> {
       ),
       backgroundColor: AppColors.backgroundColor,
       body: SwipableStack(
-        onSwipeCompleted: (index, direction) {
-          db.qNa.remove(_controller.currentIndex);
-        },
+        // onSwipeCompleted: (index, direction) {
+        //   db.qNa.removeAt(index);
+        //   debugPrint(db.qNa.length.toString());
+        // },
         controller: _controller,
         itemCount: db.qNa.length,
         builder: (context, itemSwipeProperties) {
